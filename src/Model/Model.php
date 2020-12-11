@@ -11,17 +11,6 @@ abstract class Model
      */
     private $db;
 
-    protected function addCommonParts($sql, $order = 'id', $direction = 'ASC', $limit = 10)
-    {
-        if ("" !== $order) {
-            $sql .= " ORDER BY $order $direction";
-        }
-
-        $sql .= " LIMIT $limit";
-
-        return $sql;
-    }
-
     protected function fetch($sql)
     {
         $stmt = $this->getDb()

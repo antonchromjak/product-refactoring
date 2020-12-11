@@ -19,20 +19,35 @@ SQL;
         if ('' !== $name || '' !== $brandId) {
             $where = [];
             if ('' !== $name) {
-                $where[] = "p.name LIKE '%$name%'";
+                $where[] = "p.name LIKE CONCAT('%', :name, '%')";
             }
 
             if ('' !== $brandId) {
-                $where[] = "b.id = $brandId";
+                $where[] = "b.id = :brandId";
             }
 
             $sql .= " WHERE " . implode(" AND ", $where);
         }
+        if ("" !== $order) {
+            $sql .= " ORDER BY :order :direction";
+        }
+        $sql .= " LIMIT :limit ";
 
+        $dbh = $this->getDb();
+        $sth = $dbh->prepare($sql);
+        if ('' !== $name) {
+            $sth->bindParam(':name', $name);
+        }
+        if ('' !== $brandId) {
+            $sth->bindParam(':brandId', $brandId, \PDO::PARAM_INT);
+        }
+        if ('' !== $order) {
+            $sth->bindParam(':order', $order);
+            $sth->bindParam(':direction', $direction);
+        }
+        $sth->bindParam(':limit', $limit, \PDO::PARAM_INT);
 
-
-        $sql = $this->addCommonParts($sql, $order, $direction, $limit);
-
-        return $this->fetch($sql);
+        $sth->execute();
+        return $sth->fetchAll(\PDO::FETCH_ASSOC);
     }
 }
