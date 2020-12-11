@@ -19,10 +19,11 @@ abstract class AbstractController
 
     public function render()
     {
-        $template = $this->getName() . ".html";
+        $name = $this->getName();
+        $template = "$name.html";
         $data = array_merge(
             [
-                'type' => $this->getName(),
+                'type' => $name,
             ],
             $this->getData()
         );
