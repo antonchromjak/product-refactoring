@@ -8,11 +8,6 @@ use App\Model\Product;
 
 class ProductController extends AbstractController
 {
-    protected function getName()
-    {
-        return 'product';
-    }
-
     protected function getData()
     {
         $name = (empty($_GET['name'])) ? '' : $_GET['name'];

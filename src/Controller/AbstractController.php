@@ -30,6 +30,9 @@ abstract class AbstractController
         echo $this->twig->render($template, $data);
     }
 
-    abstract protected function getName();
+    protected function getName(){
+        return strtolower(str_replace("Controller","",(new \ReflectionClass($this))->getShortName()));
+    }
+
     abstract protected function getData();
 }
