@@ -22,14 +22,8 @@ Log::$instance  = $log;
 
 try {
     $type = $_GET['type'] ?? 'product';
-    switch ($type) {
-        case 'stats':
-            $controller = new \App\Controller\StatsController($twig);
-            break;
-        default:
-            $controller = new \App\Controller\ProductController($twig);
-    }
-
+    $controllerName = "\App\Controller\\".ucfirst($type)."Controller";
+    $controller = New $controllerName($twig);
     $controller->render();
 } catch (\Throwable $e) {
     Log::critical($e->getMessage());
