@@ -4,10 +4,15 @@ namespace App\Model;
 
 class Product extends Model
 {
-    public function load($name = '', $brandId = '', $order = 'id', $direction = 'ASC', $limit = 10)
+    public function loadWithSums($name = '', $brandId = '', $order = 'id', $direction = 'ASC', $limit = 10)
     {
         $sql = <<<SQL
-SELECT p.*, b.name AS brand FROM products p
+SELECT 
+    p.*, 
+    b.name AS brand,
+    p.price * p.quantity as sum_price, 
+    p.price * p.reserved as sum_reserved_price 
+FROM products p
 JOIN brands b on p.brand_id = b.id
 SQL;
 
