@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">QTY</th>
+        <th scope="col">Reserved QTY</th>
+        <th scope="col">Price QTY</th>
+        <th scope="col">Price Reserved QTY</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for brand in brands %}
+    <tr>
+        <th scope="row">{{ brand['name'] }}</th>
+        <td>{{ (brand['quantity'] is empty) ? '0' : brand['quantity'] }}</td>
+        <td>{{ (brand['reserved'] is empty) ? '0' : brand['reserved'] }}</td>
+        <td>{{ (brand['price_quantity'] is empty) ? '0' : brand['price_quantity'] }}</td>
+        <td>{{ (brand['price_reserved'] is empty) ? '0' : brand['price_reserved'] }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+

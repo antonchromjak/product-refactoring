@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<form class="form mb-2" action="/" method="get">
+    <div class="form-row mb-1 mt-3">
+        <div class="col">
+            <label for="name">Product name</label>
+            <input name="name" class="form-control" id="name" type="text">
+        </div>
+        <div class="col">
+            <label for="brand">Brand</label>
+            <select name="brand" id="brand" class="form-control">
+                <option></option>
+                {% for brand in brands %}
+                    <option value="{{ brand['id'] }}">{{ brand['name'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col">
+            <label for="limit">Products per page</label>
+            <select name="limit" id="limit" class="form-control">
+                <option></option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+        <div class="col">
+            <label for="order">Order by</label>
+            <select name="order" id="order" class="form-control">
+                <option></option>
+                <option value="name">Name</option>
+                <option value="brand">Brand</option>
+            </select>
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Save</button>
+</form>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Brand</th>
+        <th scope="col">Price</th>
+        <th scope="col">QTY / Reserved QTY</th>
+        <th scope="col">Sum price / Reserved sum price</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for product in products %}
+    <tr>
+        <th scope="row">{{ product['id'] }}</th>
+        <td>{{ product['name'] }}</td>
+        <td>{{ product['brand'] }}</td>
+        <td>{{ product['price'] }}</td>
+        <td>{{ product['quantity'] }} / {{ product['reserved'] }}</td>
+        <td>{{ product['sum_price'] }} / {{ product['sum_reserved_price'] }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
